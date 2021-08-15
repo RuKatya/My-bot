@@ -3,20 +3,33 @@ require('dotenv').config()
 const commands = require('./const')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
-// bot.start((ctx) => ctx.reply('Welcome'))
-// bot.start((ctx) => console.log(ctx.message))
-// bot.on('sticker', (ctx) => ctx.reply('👍'))
-// bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.on('sticker', (ctx) => ctx.reply('👍'))
+bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+bot.hears('Hi', (ctx) => ctx.reply('Hey there'))
+bot.hears('hello', (ctx) => ctx.reply('Hey there'))
+bot.hears('Hello', (ctx) => ctx.reply('Hey there'))
 
-bot.start((ctx) => ctx.reply(`Hello ${ctx.message.from.first_name ? ctx.message.from.first_name : `guest`}!`))
 bot.help((ctx) => ctx.reply(commands.commands))
 
-bot.command('course', async (ctx) => {
+bot.command('start', async (ctx) => {
     try {
-        await ctx.replyWithHTML('<b>Courded</b>', Markup.inlineKeyboard(
+        await ctx.replyWithHTML(`<b>Hello ${ctx.message.from.first_name ? ctx.message.from.first_name : `guest`}!</b>
+        What do you want know about me?`, Markup.inlineKeyboard(
             [
-                [Markup.button.callback('One', 'btn_1'), Markup.button.callback('Two', 'btn_2')],
-                [Markup.button.callback('Three', 'btn_3')]
+                [
+                    Markup.button.callback('Where are you from?', 'wherefrom'),
+                    Markup.button.callback('Which books do you like?', 'books')
+                ],
+                [
+                    Markup.button.callback('Which framework or library do you like?', 'framelab'),
+                    Markup.button.callback('What do you want to study in near future?', 'study')
+                ],
+                [
+                    Markup.button.callback('Show me your works', 'works'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
             ]
         ))
     } catch (error) {
@@ -24,27 +37,263 @@ bot.command('course', async (ctx) => {
     }
 })
 
-function addActionBot(name, src, text) {
-    bot.action(name, async (ctx) => {
-        try {
-            await ctx.answerCbQuery()
-            if (src !== false) {
-                await ctx.replyWithPhoto({
-                    source: src
-                })
-            }
-            await ctx.replyWithHTML(text, {
-                disable_web_page_preview: true
-            })
-        } catch (error) {
-            console.log(error)
-        }
-    })
-}
+//Living
+bot.action('wherefrom', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.whereFrom, Markup.inlineKeyboard(
+            [
+                [
+                    // Markup.button.callback('Where are you from?', 'wherefrom'),
+                    Markup.button.callback('Which books do you like?', 'books')
+                ],
+                [
+                    Markup.button.callback('Which framework or library do you like?', 'framelab'),
+                    Markup.button.callback('What do you want to study in near future?', 'study')
+                ],
+                [
+                    Markup.button.callback('Show me your works', 'works'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
-addActionBot('btn_1', './pic.png', commands.text)
-addActionBot('btn_2', false, commands.text)
+//Books
+bot.action('books', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.books, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.callback('Where are you from?', 'wherefrom'),
+                    // Markup.button.callback('Which books do you like?', 'books')
+                ],
+                [
+                    Markup.button.callback('Which framework or library do you like?', 'framelab'),
+                    Markup.button.callback('What do you want to study in near future?', 'study')
+                ],
+                [
+                    Markup.button.callback('Show me your works', 'works'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
+//Like now
+bot.action('framelab', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.framelab, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.callback('Where are you from?', 'wherefrom'),
+                    Markup.button.callback('Which books do you like?', 'books')
+                ],
+                [
+                    // Markup.button.callback('Which framework or library do you like?', 'framelab'),
+                    Markup.button.callback('What do you want to study in near future?', 'study')
+                ],
+                [
+                    Markup.button.callback('Show me your works', 'works'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+//Want to study
+bot.action('study', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.study, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.callback('Where are you from?', 'wherefrom'),
+                    Markup.button.callback('Which books do you like?', 'books')
+                ],
+                [
+                    Markup.button.callback('Which framework or library do you like?', 'framelab'),
+                    // Markup.button.callback('What do you want to study in near future?', 'study')
+                ],
+                [
+                    Markup.button.callback('Show me your works', 'works'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+//My works
+bot.action('works', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.works, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.url('Qiuz please', 'https://quiz-question-app.herokuapp.com/'),
+                    Markup.button.url('Tasks', 'https://your-personal-tasks.herokuapp.com/'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+                [
+                    Markup.button.callback('Go back to main', 'main'),
+                ],
+
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+//Main
+bot.action('main', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.main, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.callback('Where are you from?', 'wherefrom'),
+                    Markup.button.callback('Which books do you like?', 'books')
+                ],
+                [
+                    Markup.button.callback('Which framework or library do you like?', 'framelab'),
+                    Markup.button.callback('What do you want to study in near future?', 'study')
+                ],
+                [
+                    Markup.button.callback('Show me your works', 'works'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+bot.command('wherefrom', async (ctx) => {
+    try {
+        await ctx.replyWithHTML(commands.whereFrom, Markup.inlineKeyboard(
+            [
+                Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+            ],
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+bot.command('books', async (ctx) => {
+    try {
+        await ctx.replyWithHTML(commands.books, Markup.inlineKeyboard(
+            [
+                Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+            ],
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+bot.command('framelab', async (ctx) => {
+    try {
+        await ctx.replyWithHTML(commands.framelab, {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+bot.command('study', async (ctx) => {
+    try {
+        await ctx.replyWithHTML(commands.study, Markup.inlineKeyboard(
+            [
+                Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+            ],
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+bot.command('works', async (ctx) => {
+    try {
+        await ctx.replyWithHTML(commands.works, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.url('Qiuz please', 'https://quiz-question-app.herokuapp.com/'),
+                    Markup.button.url('Tasks', 'https://your-personal-tasks.herokuapp.com/'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+bot.command('portfolio', async (ctx) => {
+    try {
+        await ctx.replyWithHTML(commands.portfolio, Markup.inlineKeyboard(
+            [
+                Markup.button.url('Protfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+            ],
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 
 
