@@ -160,8 +160,60 @@ bot.action('works', async (ctx) => {
         await ctx.replyWithHTML(commands.works, Markup.inlineKeyboard(
             [
                 [
-                    Markup.button.url('Qiuz please', 'https://quiz-question-app.herokuapp.com/'),
-                    Markup.button.url('Tasks', 'https://your-personal-tasks.herokuapp.com/'),
+                    Markup.button.callback('Qiuz please', 'quizplease'),
+                    Markup.button.callback('Tasks menegmant', 'tasks'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+                [
+                    Markup.button.callback('Go back to main', 'main'),
+                ],
+
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+//Quiz
+bot.action('quizplease', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.quiz, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.url('Visit the site', 'https://quiz-question-app.herokuapp.com/'),
+                    Markup.button.url('Github', 'https://github.com/RuKatya/Quiz-project/'),
+                ],
+                [
+                    Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
+                ],
+                [
+                    Markup.button.callback('Go back to main', 'main'),
+                ],
+
+            ]
+        ), {
+            disable_web_page_preview: true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+//Tasks
+bot.action('tasks', async (ctx) => {
+    try {
+        await ctx.answerCbQuery()
+        await ctx.replyWithHTML(commands.task, Markup.inlineKeyboard(
+            [
+                [
+                    Markup.button.url('Visit the site', 'https://your-personal-tasks.herokuapp.com/'),
+                    Markup.button.url('Github', 'https://github.com/RuKatya/Remembers'),
                 ],
                 [
                     Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
@@ -208,7 +260,7 @@ bot.action('main', async (ctx) => {
     }
 })
 
-
+//WHERE
 bot.command('wherefrom', async (ctx) => {
     try {
         await ctx.replyWithHTML(commands.whereFrom, Markup.inlineKeyboard(
@@ -223,6 +275,7 @@ bot.command('wherefrom', async (ctx) => {
     }
 })
 
+//BOOKS
 bot.command('books', async (ctx) => {
     try {
         await ctx.replyWithHTML(commands.books, Markup.inlineKeyboard(
@@ -237,6 +290,7 @@ bot.command('books', async (ctx) => {
     }
 })
 
+//FRAME
 bot.command('framelab', async (ctx) => {
     try {
         await ctx.replyWithHTML(commands.framelab, {
@@ -247,6 +301,7 @@ bot.command('framelab', async (ctx) => {
     }
 })
 
+//STUDY
 bot.command('study', async (ctx) => {
     try {
         await ctx.replyWithHTML(commands.study, Markup.inlineKeyboard(
@@ -261,13 +316,14 @@ bot.command('study', async (ctx) => {
     }
 })
 
+//WORKS
 bot.command('works', async (ctx) => {
     try {
         await ctx.replyWithHTML(commands.works, Markup.inlineKeyboard(
             [
                 [
-                    Markup.button.url('Qiuz please', 'https://quiz-question-app.herokuapp.com/'),
-                    Markup.button.url('Tasks', 'https://your-personal-tasks.herokuapp.com/'),
+                    Markup.button.callback('Qiuz please', 'quizplease'),
+                    Markup.button.callback('Tasks menegmant', 'tasks'),
                 ],
                 [
                     Markup.button.url('Lets check your Portfolio', 'https://katya-ru-fullstack.herokuapp.com/'),
@@ -294,8 +350,6 @@ bot.command('portfolio', async (ctx) => {
         console.log(error)
     }
 })
-
-
 
 bot.launch()
 
